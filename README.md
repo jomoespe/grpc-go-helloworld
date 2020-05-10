@@ -9,18 +9,18 @@ Following [this project](https://github.com/grpc/grpc-go/tree/master/examples/he
 $ make clean && make
 
 # Run the server
-./server
+$ ./server
 
 # Run the client
-./client [name] [invications:10]
+$ ./client [name] [invications:10]
 ```
 
 ## Links
 
-- https://grpc.io/docs/quickstart/go/
-- https://github.com/protocolbuffers/protobuf/releases
-- https://grpc.io/docs/guides/
-- https://github.com/jeffwubj/grpc-unixsocket
+- [https://grpc.io/docs/quickstart/go/](https://grpc.io/docs/quickstart/go/)
+- [https://github.com/protocolbuffers/protobuf/releases](https://github.com/protocolbuffers/protobuf/releases)
+- [https://grpc.io/docs/guides/](https://grpc.io/docs/guides/)
+- [https://github.com/jeffwubj/grpc-unixsocket](https://github.com/jeffwubj/grpc-unixsocket)
 
 ## How to install protoc environment for Go
 
