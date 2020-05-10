@@ -8,8 +8,19 @@ export PATH := $(PATH):$(shell go env GOPATH)/bin
 
 all: client server
 
-clean:
-	@ rm -f client server helloworld/helloworld.pb.go
+clean: clean-client clean-server clean-helloworld/helloworld.pb.go
+	@ rm -f client
+
+
+clean-client:
+	@ rm -f client
+
+clean-server:
+	@ rm -f server
+
+clean-helloworld/helloworld.pb.go:
+	@ rm -f helloworld/helloworld.pb.go
+
 
 client: helloworld/helloworld.pb.go
 	@ go build -o client greeter_client/main.go
