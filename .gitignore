@@ -1,0 +1,4 @@
+# build binaries
+helloworld/helloworld.pb.go
+./client
+./server
