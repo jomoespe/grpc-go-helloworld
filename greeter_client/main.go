@@ -51,14 +51,14 @@ func main() {
 	var wg sync.WaitGroup
 	for i := 0; i < invokations; i++ {
 		wg.Add(1)
-		go func() {
+		go func(i int) {
 			defer wg.Done()
-			r, err := c.SayHello(ctx, &helloworld.HelloRequest{Name: name})
+			r, err := c.SayHello(ctx, &helloworld.HelloRequest{Name: name + " # " + strconv.Itoa(i)})
 			if err != nil {
 				log.Fatalf("could not greet: %v", err)
 			}
 			fmt.Printf("Greeting: %s\n", r.GetMessage())
-		}()
+		}(i)
 	}
 	wg.Wait()
 }
