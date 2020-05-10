@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"log"
 	"net"
 
@@ -28,7 +27,6 @@ func (s *server) SayHello(ctx context.Context, in *helloworld.HelloRequest) (*he
 }
 
 func main() {
-	fmt.Println("Greeter server")
 
 	lis, err := net.Listen(network, address)
 	if err != nil {
@@ -36,6 +34,7 @@ func main() {
 	}
 	s := grpc.NewServer()
 	helloworld.RegisterGreeterServer(s, &server{})
+	log.Printf("Greeter server listening on %s %s", network, address)
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)
 	}
