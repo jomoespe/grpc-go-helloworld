@@ -1,4 +1,4 @@
-# GRPC Examples
+# GRPC Hello World
 
 Following [this project](https://github.com/grpc/grpc-go/tree/master/examples/helloworld)
 
@@ -12,7 +12,7 @@ $ make clean && make
 ./server
 
 # Run the client
-./client [a-name]
+./client [name] [invications:10]
 ```
 
 ## Links

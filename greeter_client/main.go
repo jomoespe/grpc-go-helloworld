@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strconv"
+	"sync"
 	"time"
 
 	"google.golang.org/grpc"
@@ -13,8 +15,9 @@ import (
 )
 
 const (
-	address     = "localhost:50051"
-	defaultName = "world"
+	address            = "localhost:50051"
+	defaultName        = "world"
+	defaultInvokations = 10
 )
 
 func main() {
@@ -34,11 +37,28 @@ func main() {
 	if len(os.Args) > 1 {
 		name = os.Args[1]
 	}
+	invokations := defaultInvokations
+	if len(os.Args) > 2 {
+		if invokations, err = strconv.Atoi(os.Args[2]); err != nil {
+			invokations = defaultInvokations
+		}
+	}
+
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
-	r, err := c.SayHello(ctx, &helloworld.HelloRequest{Name: name})
-	if err != nil {
-		log.Fatalf("could not greet: %v", err)
+
+	// Invoke service in gorutines
+	var wg sync.WaitGroup
+	for i := 0; i < invokations; i++ {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			r, err := c.SayHello(ctx, &helloworld.HelloRequest{Name: name})
+			if err != nil {
+				log.Fatalf("could not greet: %v", err)
+			}
+			fmt.Printf("Greeting: %s\n", r.GetMessage())
+		}()
 	}
-	fmt.Printf("Greeting: %s\n", r.GetMessage())
+	wg.Wait()
 }
