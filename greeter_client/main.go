@@ -18,8 +18,6 @@ const (
 )
 
 func main() {
-	fmt.Println("Greeter client")
-
 	// Set up a connection to the server.
 	conn, err := grpc.Dial(
 		address,
@@ -42,5 +40,5 @@ func main() {
 	if err != nil {
 		log.Fatalf("could not greet: %v", err)
 	}
-	log.Printf("Greeting: %s", r.GetMessage())
+	fmt.Printf("Greeting: %s\n", r.GetMessage())
 }
