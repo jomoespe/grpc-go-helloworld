@@ -15,6 +15,16 @@ $ ./server
 $ ./client [name] [invications:10]
 ```
 
+## Unix sockets
+
+The brach `unixsocket` contains an implementation that use [unix sockets](https://en.wikipedia.org/wiki/Unix_domain_socket) instead of network (*TCP/IP sockets*). It's is built and ran in the same way that the TCP implementation.
+
+To see the unix sockets opened:
+
+```bash
+netstat -a -p --unix
+```
+
 ## Links
 
 - [https://grpc.io/docs/quickstart/go/](https://grpc.io/docs/quickstart/go/)
