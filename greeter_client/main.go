@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"net"
 	"os"
 	"strconv"
 	"sync"
@@ -15,17 +16,24 @@ import (
 )
 
 const (
-	address            = "localhost:50051"
+	network            = "unix"
+	address            = "/tmp/test.sock"
 	defaultName        = "world"
 	defaultInvokations = 10
 )
+
+func UnixConnect(addr string, t time.Duration) (net.Conn, error) {
+	unix_addr, err := net.ResolveUnixAddr(network, address)
+	conn, err := net.DialUnix(network, nil, unix_addr)
+	return conn, err
+}
 
 func main() {
 	// Set up a connection to the server.
 	conn, err := grpc.Dial(
 		address,
 		grpc.WithInsecure(),
-		grpc.WithBlock())
+		grpc.WithDialer(UnixConnect))
 	if err != nil {
 		log.Fatalf("did not connect: %v", err)
 	}

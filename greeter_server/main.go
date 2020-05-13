@@ -6,13 +6,14 @@ import (
 	"net"
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 
 	helloworld "github.com/jomoespe/grpc/helloworld"
 )
 
 const (
-	network = "tcp"
-	address = ":50051"
+	network = "unix"
+	address = "/tmp/test.sock"
 )
 
 // server is used to implement helloworld.GreeterServer.
@@ -34,6 +35,7 @@ func main() {
 	}
 	s := grpc.NewServer()
 	helloworld.RegisterGreeterServer(s, &server{})
+	reflection.Register(s)
 	log.Printf("Greeter server listening on %s %s", network, address)
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)
